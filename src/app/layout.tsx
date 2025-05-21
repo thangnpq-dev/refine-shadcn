@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import React, { Suspense } from "react";
-import { RefineContext } from "./_refine_context";
-import { ThemeProvider } from "@components/ui/theme-provider";
-import "@styles/global.css";
+import { ThemeProvider } from "@/providers/theme-provider";
+import { AuthProvider } from "@/providers/auth-provider";
+import { RefineContext } from "./_refine/context";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Refine",
@@ -18,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased">
-        <ThemeProvider>
-          <Suspense>
-            <RefineContext>{children}</RefineContext>
-          </Suspense>
+        <ThemeProvider defaultTheme="system">
+          <AuthProvider>
+            <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+              <RefineContext>{children}</RefineContext>
+            </Suspense>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

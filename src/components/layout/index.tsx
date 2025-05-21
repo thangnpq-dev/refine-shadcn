@@ -2,15 +2,15 @@
 
 import type { PropsWithChildren } from "react";
 import { Breadcrumb } from "../breadcrumb";
-import { Menu } from "../menu";
+import { Navigation } from "../navigation";
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="layout">
-      <Menu />
-      <div className="content">
+    <div className="flex flex-col min-h-screen">
+      <Navigation />
+      <div className="flex-1 container py-4">
         <Breadcrumb />
-        <div>{children}</div>
+        <div className="mt-4">{children}</div>
       </div>
     </div>
   );
