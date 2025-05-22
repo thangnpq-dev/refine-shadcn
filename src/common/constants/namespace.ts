@@ -7,6 +7,6 @@ export const NAMESPACES = {
   DEALER: 'dealer',
   SERVICE_REQUEST: 'service-request',
   MAINTENANCE: 'maintenance',
-  DASHBOARD: 'dashboard',
+  DASHBOARD: 'authorized',
   NOTIFICATION: 'notification',
 };  

@@ -4,7 +4,7 @@ export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
-  DASHBOARD: '/dashboard',
+  DASHBOARD: '/authorized',
   TRIALS: '/trials',
   CATEGORIES: '/categories',
   BLOG_POSTS: '/blog-posts',

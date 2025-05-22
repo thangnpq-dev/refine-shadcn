@@ -1,16 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import type { PropsWithChildren } from "react";
-import { Breadcrumb } from "../breadcrumb";
-import { Navigation } from "../navigation";
+import { Sidebar } from "../sidebar";
+import { cn } from "@/lib/utils";
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navigation />
-      <div className="flex-1 container py-4 max-w-[100%]">
-        <Breadcrumb />
-        <div className="mt-4">{children}</div>
+    <div className="min-h-screen overflow-hidden">
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <div className={cn(
+        "ml-64 transition-all duration-300 min-h-screen",
+        collapsed && "ml-16"
+      )}>
+        <div className="p-6 overflow-y-auto">
+          {children}
+        </div>
       </div>
     </div>
   );

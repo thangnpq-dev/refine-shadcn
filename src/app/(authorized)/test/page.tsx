@@ -154,6 +154,19 @@ export const UserManagementTable: React.FC<UserTableProps> = ({
 
   const getColumns = ({ getColumnSearchProps }: any) => [
     {
+      title: translate('action'),
+      key: 'operation',
+      fixed: 'left',
+      align: 'center',
+      width: 100,
+      onCell: () => ({
+        onClick: (event: any) => {
+          event.stopPropagation();
+        },
+      }),
+      render: renderActions,
+    },
+    {
       title: translate('label.full_name', { ns: NAMESPACES.USER }),
       dataIndex: 'fullName',
       key: 'fullName',
@@ -206,19 +219,6 @@ export const UserManagementTable: React.FC<UserTableProps> = ({
       sorter: true,
       sortDirections: ['ascend', 'descend'],
       render: (date: string) => new Date(date).toLocaleDateString(),
-    },
-    {
-      title: translate('action'),
-      key: 'operation',
-      fixed: 'right',
-      align: 'center',
-      width: 100,
-      onCell: () => ({
-        onClick: (event: any) => {
-          event.stopPropagation();
-        },
-      }),
-      render: renderActions,
     },
   ];
 
