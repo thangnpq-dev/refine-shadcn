@@ -76,7 +76,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
     onError: async (error) => {
       if (error.response?.status === 401) {
         return {
-          logout: true,
+          logout: false,
         };
       }
 
@@ -145,6 +145,14 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               list: "/trial-table",
               meta: {
                 label: "Trial Table",
+                canDelete: false,
+              },
+            },
+            {
+              name: "test",
+              list: "/test",
+              meta: {
+                label: "Test",
                 canDelete: false,
               },
             },

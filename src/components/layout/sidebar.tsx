@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { LayoutDashboard, ListFilter, FilePenLine, Settings, User } from 'lucide-react';
-import { ROUTES } from '@/constants';
+import { ROUTES } from '@/common/constants';
 
 interface NavItem {
   title: string;

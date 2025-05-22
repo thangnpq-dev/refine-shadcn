@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, Search, BellIcon, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { APP_NAME } from '@/constants';
+import { APP_NAME } from '@/common/constants';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

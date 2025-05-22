@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/constants';
+import { ROUTES } from '@/common/constants';
 
 interface User {
   email: string;
