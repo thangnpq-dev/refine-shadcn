@@ -13,9 +13,19 @@ const apiClient = axios.create({
 // Add a request interceptor for authentication
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('auth');
-    if (token) {
-      config.headers.Authorization = `Bearer ${JSON.parse(token).token}`;
+    // Đọc token từ localStorage
+    const auth = localStorage.getItem('auth');
+    if (auth) {
+      try {
+        const { token } = JSON.parse(auth);
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      } catch (error) {
+        console.error('Error parsing auth token:', error);
+        // Nếu có lỗi khi parse token, xóa token khỏi localStorage
+        localStorage.removeItem('auth');
+      }
     }
     return config;
   },
@@ -34,7 +44,14 @@ apiClient.interceptors.response.use(
     if (response && response.status === 401) {
       // Unauthorized - clear auth and redirect to login
       localStorage.removeItem('auth');
-      window.location.href = '/login';
+      
+      // Sử dụng Next.js router thay vì window.location nếu đang ở client side
+      if (typeof window !== 'undefined') {
+        // Tránh vòng lặp chuyển hướng nếu đang ở trang login
+        if (!window.location.pathname.includes('/login')) {
+          window.location.href = '/login';
+        }
+      }
     }
     
     return Promise.reject(error);

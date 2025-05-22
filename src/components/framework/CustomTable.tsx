@@ -143,7 +143,12 @@ export const CommonTable = <T extends object>({
       </div>
     ),
     filterIcon: (filtered: boolean) => (
-      <span className={filtered ? 'text-primary' : ''}>🔍</span>
+      <span className={filtered ? 'text-primary' : ''}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
     ),
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
@@ -162,32 +167,56 @@ export const CommonTable = <T extends object>({
   }, [columnsProp]);
 
   return (
-    <Table
-      scroll={{ x: 720 }}
-      dataSource={data}
-      loading={tableQuery.isFetching}
-      rowKey="id"
-      rowClassName="row-selector"
-      columns={columns}
-      pagination={{
-        current,
-        pageSize,
-        total,
-        position: ['bottomCenter'],
-        showSizeChanger: false,
-      }}
-      onChange={onChangeTable}
-      onRow={(record) => {
-        return {
-          onClick: (event) => {
-            event.stopPropagation();
-            if (onRowClick) {
-                onRowClick(record as T);
-            }
-          },
-        };
-      }}
-      key={key}
-    />
+    <div className="custom-table-container">
+      <style jsx global>{`
+        /* Giảm độ đậm của đường kẻ ngăn cách cột */
+        .custom-table-container .ant-table-cell {
+          border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        /* Làm nhạt đường kẻ ngang */
+        .custom-table-container .ant-table-thead > tr > th {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+          background-color: #f9f9f9 !important;
+        }
+        
+        /* Làm nhạt đường kẻ giữa các hàng */
+        .custom-table-container .ant-table-tbody > tr > td {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        /* Loại bỏ đường kẻ ở cột cuối cùng */
+        .custom-table-container .ant-table-cell:last-child {
+          border-right: none !important;
+        }
+      `}</style>
+      <Table
+        scroll={{ x: 720 }}
+        dataSource={data}
+        loading={tableQuery.isFetching}
+        rowKey="id"
+        rowClassName="row-selector"
+        columns={columns}
+        pagination={{
+          current,
+          pageSize,
+          total,
+          position: ['bottomCenter'],
+          showSizeChanger: false,
+        }}
+        onChange={onChangeTable}
+        onRow={(record) => {
+          return {
+            onClick: (event) => {
+              event.stopPropagation();
+              if (onRowClick) {
+                  onRowClick(record as T);
+              }
+            },
+          };
+        }}
+        key={key}
+      />
+    </div>
   );
 };

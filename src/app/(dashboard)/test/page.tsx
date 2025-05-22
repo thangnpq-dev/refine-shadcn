@@ -7,8 +7,13 @@ import { NUser } from '@/common/interfaces/user';
 import { CommonTable } from '@/components/framework/CustomTable';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { DropdownMenuContent, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { CrudFilter, useGetIdentity, useNavigation, useTranslation } from '@refinedev/core';
 import { Card } from 'antd';
 import { ItemType } from 'antd/es/menu/interface';
@@ -53,7 +58,7 @@ const useUpdateUserStatus = () => {
 };
 
 // Định nghĩa component TestPage với props
-// Component vu1edbi props
+// Component sử dụng props để nhận dữ liệu từ cha
 export const UserManagementTable: React.FC<UserTableProps> = ({
   key,
   defaultFilters,
@@ -74,33 +79,37 @@ export const UserManagementTable: React.FC<UserTableProps> = ({
   };
 
 
-  const renderActions = (value: any, record: NUser.IUser, index: number) => {
+  const renderActions = (_: any, record: NUser.IUser) => {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+          <Button variant="outline" size="icon" className="h-8 w-8 rounded-full">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => navigator.push(`edit/${record.id}`)}>
-            <Edit className="mr-2 h-4 w-4" />
+        <DropdownMenuContent align="end" className="w-[160px] p-2">
+          <DropdownMenuItem 
+            onClick={() => navigator.push(`edit/${record.id}`)}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm cursor-pointer hover:bg-secondary"
+          >
+            <Edit className="h-4 w-4 text-gray-500" />
             <span>Edit</span>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => onUpdateStatus(record.id,
               record.status === UserStatus.ACTIVE ? UserStatus.INACTIVE : UserStatus.ACTIVE
             )}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm cursor-pointer hover:bg-secondary"
           >
             {record.status === UserStatus.ACTIVE ? (
               <>
-                <UserX className="mr-2 h-4 w-4" />
+                <UserX className="h-4 w-4 text-red-500" />
                 <span>Deactivate</span>
               </>
             ) : (
               <>
-                <UserCheck className="mr-2 h-4 w-4" />
+                <UserCheck className="h-4 w-4 text-green-500" />
                 <span>Activate</span>
               </>
             )}
