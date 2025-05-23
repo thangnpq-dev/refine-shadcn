@@ -34,19 +34,29 @@ export const useTokenValidation = (): UseTokenValidationResult => {
         const result = await TokenService.validateToken(token);
         
         if (result.success) {
-          setIsValid(true);
+          // Xóa token khỏi URL để bảo mật
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.delete('token');
+          window.history.replaceState({}, '', newUrl.toString());
           
-          // Chuyển hướng đến trang dashboard hoặc trang chủ mà không có token trong URL
-          // Điều này để tránh việc token bị lộ trong history hoặc bookmark
-          const currentPath = window.location.pathname;
-          router.replace(currentPath);
+          // Chỉ chuyển hướng nếu đang ở trang login
+          const isLoginPage = window.location.pathname.includes('/login');
+          if (isLoginPage) {
+            router.push('/dashboard');
+          }
+          setIsValid(true);
+          // Đã xóa token khỏi URL ở trên bằng window.history.replaceState
         } else {
           setIsValid(false);
           setError('Token is invalid or expired');
           // Xóa token hiện tại nếu có
           TokenService.removeToken();
-          // Chuyển hướng đến trang đăng nhập
-          router.replace('/login');
+          
+          // Chỉ chuyển hướng đến trang đăng nhập nếu không phải đang ở trang login
+          const isLoginPage = window.location.pathname.includes('/login');
+          if (!isLoginPage) {
+            router.replace('/login');
+          }
         }
       } catch (err) {
         setIsValid(false);

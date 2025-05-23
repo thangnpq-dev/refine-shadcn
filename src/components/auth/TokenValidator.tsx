@@ -1,6 +1,6 @@
 'use client';
 
-import { useTokenValidation } from '@/hooks/useTokenValidation';
+import { useTokenValidation } from '@/common/hooks/useTokenValidation';
 import { ReactNode } from 'react';
 
 interface TokenValidatorProps {
