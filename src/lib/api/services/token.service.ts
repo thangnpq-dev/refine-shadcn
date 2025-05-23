@@ -1,10 +1,14 @@
+import { environment } from '@/environment/environment';
 import apiClient from '../axios';
 
 const TokenService = {
   // Validate token nhận được từ URL
   validateToken: async (token: string) => {
     try {
-      const response = await apiClient.post('/auth/validate-token', { token });
+      // u0110u01b0u1eddng du1eabn API endpoint - chu1ec9nh su1eeda cu00f3 thu1ec3 cu1ea7n theo API cu1ee7a bu1ea1n
+      const path = `api/${environment.apiVersion}/${environment.apiAuth}/validate-token`;
+      console.log('Validating token with endpoint:', path);
+      const response = await apiClient.post(path, { token });
       
       if (response.data?.accessToken) {
         // Lưu token vào localStorage nếu hợp lệ

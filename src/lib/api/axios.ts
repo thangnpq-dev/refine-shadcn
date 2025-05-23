@@ -1,10 +1,10 @@
 // Axios configuration for API requests
 
 import axios from 'axios';
-import { getApiUrl } from '@/app/_refine/actions';
+import { environment } from '@/environment/environment';
 
 const apiClient = axios.create({
-  baseURL: getApiUrl(),
+  baseURL: environment.apiUrl,
   headers: {
     'Content-Type': 'application/json'
   }

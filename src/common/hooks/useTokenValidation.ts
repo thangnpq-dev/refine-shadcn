@@ -22,6 +22,7 @@ export const useTokenValidation = (): UseTokenValidationResult => {
   useEffect(() => {
     const validateTokenFromUrl = async () => {
       const token = searchParams.get('token');
+      console.log('Token from URL:', token ? 'Found token' : 'No token');
       
       // Nếu không có token trong URL, không cần xử lý
       if (!token) return;
